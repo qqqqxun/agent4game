@@ -1,0 +1,36 @@
+class NovelGenerator:
+    def __init__(self):
+        self.story_agent = StoryAgent()
+        self.character_agent = CharacterAgent()
+        self.world_agent = WorldAgent()
+        self.novel = ""
+
+    def generate_novel(self):
+        # 生成情节
+        plot_points = self.story_agent.generate_plot()
+
+        # 创建角色
+        self.character_agent.create_character("艾伦", "主角", ["勇敢", "聪明"])
+        self.character_agent.create_character("莉娜", "同伴", ["善良", "忠诚"])
+        self.character_agent.create_character("黑暗法师", "反派", ["狡猾", "强大"])
+        characters = self.character_agent.get_characters()
+
+        # 创建世界
+        world = self.world_agent.create_world()
+
+        # 拼接成小说
+        self.novel += f"背景：{world['setting']}\n\n"
+        for point in plot_points:
+            self.novel += f"{point}\n\n"
+
+        for character in characters:
+            self.novel += f"{character['name']}（{character['role']}）：{'，'.join(character['traits'])}\n\n"
+
+        return self.novel
+
+# 实例化小说生成器并生成小说
+novel_generator = NovelGenerator()
+novel = novel_generator.generate_novel()
+
+# 打印生成的小说
+print(novel)
